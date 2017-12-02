@@ -1,6 +1,8 @@
 package models;
+import haxe.ds.IntMap;
+import models.GridEntity.Facing;
 
-public class Grid {
+class Grid {
     
     public var gridCells:Array<Array<Int>>;
     public var entityMap:IntMap<GridEntity>;
@@ -10,7 +12,7 @@ public class Grid {
         gridCells = new Array<Array<Int>>();
         for(i in 0...C.GRID_WIDTH) {
             gridCells.push( new Array<Int>() );
-            for(j in C.GRID_HEIGHT) {
+            for(j in 0...C.GRID_HEIGHT) {
                 gridCells[i].push(0);
             }
         }
@@ -21,7 +23,7 @@ public class Grid {
     }
 
     public function isValid(point:Point):Bool{
-        if (point.x < 0 || point.y < 0) || point.x >= C.GRID_WIDTH || point.y >= C.GRID_HEIGHT) return false;
+        if (point.x < 0 || point.y < 0 || point.x >= C.GRID_WIDTH || point.y >= C.GRID_HEIGHT) return false;
         else return true; 
     }
     public function isOpen(point:Point):Bool{
