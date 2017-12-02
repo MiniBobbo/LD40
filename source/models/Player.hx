@@ -1,22 +1,22 @@
 package models;
 import C;
 
-class Player {
+class Player extends GridEntity{
     public function new(){
-        locationOnGrid = new Point();
+        super();
         speed = C.SPEED;
     }
 
-    public var locationOnGrid:Point;
-    public var facing:Facing;
-    //public var Sprite
-    public var speed:Float;
     
+    //public var Sprite
+    private var speed:Float;
+    private var actionDelay:Float;
+    public function update(elapsedTime:Float){
+        // when we listen for keyboard input, we don't let the player
+        // act unless the action delay is 0
+        actionDelay -= elapsedTime;
+    }    
 }
 
-enum Facing {
-    Up;
-    Down;
-    Left;
-    Right;
-}
+
+

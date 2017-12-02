@@ -8,9 +8,11 @@ class Main extends Sprite
 {
 	public function new()
 	{
-		super();
+		super(); 
+		InputHelper.init();
 		InputHelper.allowArrowKeys();
 		InputHelper.allowWASD();
 		addChild(new FlxGame(480, 270, TestState));
+		//fewafew
 	}
 }
