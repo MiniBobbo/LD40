@@ -4,6 +4,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxColor;
+import haxe.ds.IntMap;
 
 /**
  * ...
@@ -13,18 +14,25 @@ class TestState extends FlxState
 {
 
 	var s:FlxSprite;
+	var bg:FlxSprite;
+	
 	override public function create():Void 
 	{
 		super.create();
 		s = new FlxSprite(100,100);
-		//s.makeGraphic(32, 32, FlxColor.BLUE);
+		s.makeGraphic(32, 32, FlxColor.BLUE);
+		bg = new FlxSprite();
+		//bg.makeGraphic(100,100,FlxColor.BLUE);
 		var atlasFrames  = FlxAtlasFrames.fromTexturePackerJson('assets/data/atlas.png', 'assets/data/atlas.json');
-		s.frames = atlasFrames;
+		bg.frames = atlasFrames;
+		bg.animation.addByPrefix('bg', 'levelMockup');
+		bg.animation.play('bg');
 		
-		s.animation.addByPrefix('run', 'worker_run', 18, true);
-		s.animation.addByPrefix('carry', 'worker_carry', 18, true);
-		s.animation.play('carry');
+		var map:IntMap = new IntMap();
+		map.set();
+		
 		
 		add(s);
+		add(bg);
 	}
 }

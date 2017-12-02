@@ -32,3 +32,4 @@
 Visual play area is 480 x 270
 Sprites are built off a 32x32 base, but may be larger if necessary
 In game units, the visual space is 15 x ~8.5
+Play area 13x6
