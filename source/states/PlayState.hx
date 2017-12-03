@@ -22,20 +22,9 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-		
-<<<<<<< HEAD
-		switch () 
-		{
-			case :
-				
-			default:
-				
-		}
-=======
 		createDisplayObjects();
 		
 		add(player);
->>>>>>> models
 		
 	}
 	override public function update(elapsed:Float):Void
