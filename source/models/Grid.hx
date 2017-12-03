@@ -7,7 +7,7 @@ class Grid {
     public var gridCells:Array<Array<Int>>;
     public var entityMap:IntMap<GridEntity>;
 
-    public function new(){
+    public function new() {
         entityMap = new IntMap<GridEntity>();
         gridCells = new Array<Array<Int>>();
         for(i in 0...C.GRID_WIDTH) {
@@ -50,6 +50,7 @@ class Grid {
         if(isOpen(potentialDestination)){
             removeEntity(gridEntity);
             placeEntity(potentialDestination, gridEntity);
+            gridEntity.moved();
         }
     }
 
