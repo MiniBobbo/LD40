@@ -3,9 +3,12 @@ package states;
 import models.GridEntity;
 import models.Point;
 import flixel.FlxState;
+import flixel.FlxG;
 import flixel.text.FlxText;
 import models.Grid;
 import models.Player;
+import models.Person;
+import models.MoveableObject;
 import inputhelper.InputHelper;
 
 /**
@@ -17,7 +20,9 @@ class TestGridState extends FlxState
 	var grid:Grid;
 	var gridText:Array<Array<FlxText>>;
 	var player:Player;
+	var manager:Person;
 	var object:GridEntity;
+	var coffee:MoveableObject;
 	var IH = InputHelper;
 	
 	override public function create():Void 
@@ -25,6 +30,11 @@ class TestGridState extends FlxState
 		super.create();
 		grid = new Grid();
 		player = new Player();
+		coffee = new MoveableObject(TypeOfObject.Coffee);
+		
+		player.tryReceive(coffee);
+		manager = new Person();
+		player.tryGive(manager, coffee);
 		gridText = [];
 		for (x in 0...C.GRID_WIDTH) {
 			gridText.push(new Array<FlxText>());
@@ -32,11 +42,14 @@ class TestGridState extends FlxState
 				var t = new FlxText(x*32, y*32, 32, 'test');
 				gridText[x].push(t);
 				add(t);
-
 			}
 		}
+
+
 		grid.addGridEntity(player);
+		grid.addGridEntity(manager);
 		grid.placeEntity(new Point(5, 5), player);
+		grid.placeEntity(new Point(13, 1), player);
 		grid.moveEntity(Facing.Up, player);
 		
 	}
