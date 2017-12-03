@@ -48,6 +48,9 @@ class GridEntity {
 		return false;
 	}
 
+	public function update(elapsed:Float) {
+		
+	}
 
 }
 

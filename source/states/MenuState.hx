@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.util.FlxSave.FlxSaveStatus;
+import states.TestGraphicsState;
 
 /**
  * ...
@@ -15,7 +16,7 @@ class MenuState extends FlxState
 	{
 		super.create();
 		
-		var level = new PlayState(C.getLevelDef(1));
+		var level = new states.TestGraphicsState(C.getLevelDef(1));
 		FlxG.switchState(level);
 	}
 	

@@ -8,14 +8,17 @@ import models.GridEntity;
  */
 class Manager extends Person 
 {
+	public var managerType:ManagerType;
 	
 	
-	public function new() 
+	public function new(managerType:ManagerType) 
 	{
 		super();
 		type = TypeOfObject.MANAGER;
+		this.managerType = managerType;
 	}
 
+	
 	
 	override public function interact(sender:GridEntity) 
 	{
@@ -33,8 +36,10 @@ class Manager extends Person
 					p.tryGive(this);
 				}
 			}
-			
-			
 		}
 	}
+}
+
+enum ManagerType {
+	CEO;
 }

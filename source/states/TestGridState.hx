@@ -49,7 +49,7 @@ class TestGridState extends FlxState
 		//coffee = new CoffeeObject();
 		//player.tryReceive(coffee);
 		
-		manager = new Manager();
+		manager = new Manager(ManagerType.CEO);
 		boxButton = new BoxButton();
 		
 		coffeePot = new CoffeePotObject();
