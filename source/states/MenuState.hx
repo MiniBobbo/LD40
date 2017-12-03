@@ -1,6 +1,8 @@
 package states;
 
+import flixel.FlxG;
 import flixel.FlxState;
+import flixel.util.FlxSave.FlxSaveStatus;
 
 /**
  * ...
@@ -9,9 +11,12 @@ import flixel.FlxState;
 class MenuState extends FlxState 
 {
 
-	public function new() 
+	override public function create():Void 
 	{
+		super.create();
 		
+		var level = new PlayState(C.getLevelDef(1));
+		FlxG.switchState(level);
 	}
 	
 }

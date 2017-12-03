@@ -3,6 +3,7 @@ package;
 import flixel.FlxGame;
 import inputhelper.InputHelper;
 import openfl.display.Sprite;
+import states.MenuState;
 import states.TestGridState;
 
 class Main extends Sprite
@@ -13,7 +14,7 @@ class Main extends Sprite
 		InputHelper.init();
 		InputHelper.allowArrowKeys();
 		InputHelper.allowWASD();
-		addChild(new FlxGame(480, 270, TestGridState));
+		addChild(new FlxGame(480, 270, MenuState));
 		//fewafew
 	}
 }
