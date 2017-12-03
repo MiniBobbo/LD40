@@ -32,6 +32,15 @@ class GridEntity {
     }
 	
 	/**
+	 * This function is called when something interacts with this grid entity.  
+	 * Overwrite this for specific actions.  Default is nothing.
+	 * @param	sender		The sender of the interaction.
+	 */
+	public function interact(sender:GridEntity) {
+		
+	}
+	
+	/**
 	* Determines if this person is carrying anything.
 	* @return	True if currently carrying another object.  Otherwise false
 	*/
@@ -53,6 +62,7 @@ enum Facing {
 enum TypeOfObject {
     None;
     Coffee;
+	Coffee_Pot;
     Copies;
     Report;
     Box;

@@ -41,8 +41,9 @@ class TestGridState extends FlxState
 		manager = new Person();
 		boxButton = new BoxButton();
 		
+		manager.itemTypeAwating = TypeOfObject.Coffee;
 		
-		player.tryGive(manager, coffee);
+		//player.tryGive(manager, coffee);
 		gridText = [];
 		for (x in 0...C.GRID_WIDTH) {
 			gridText.push(new Array<FlxText>());
@@ -53,7 +54,7 @@ class TestGridState extends FlxState
 			}
 		}
 
-		displayText = new FlxText(0, C.GRID_HEIGHT * C.TILE_SIZE, FlxG.width, 'Test ' + player.get_itemCarried().type.getName());
+		displayText = new FlxText(0, C.GRID_HEIGHT * C.TILE_SIZE, FlxG.width, 'Player: ' + player.get_itemCarried().type.getName());
 		add(displayText);
 		
 		
@@ -88,6 +89,9 @@ class TestGridState extends FlxState
 			getPlayerInput();
 		}
 		
+		displayText.text = 'Player: ' + player.get_itemCarried();
+		displayText.text += '\nManager; ' + manager.get_itemCarried();
+		
 	}
 	
 	private function getPlayerInput() {
@@ -119,7 +123,13 @@ class TestGridState extends FlxState
 	}
 	
 	private function interactWithObject(object:GridEntity){
-		
+		if (Std.is(object, Person)){
+			FlxG.log.add('Interacting with a person');
+			var p:Person = cast object;
+			player.tryGive(p, player.get_itemCarried());
+			
+		}
+			
 		
 	}
 
