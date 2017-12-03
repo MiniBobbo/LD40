@@ -4,12 +4,9 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxColor;
-<<<<<<< HEAD
 import haxe.ds.IntMap;
-=======
 import flixel.group.FlxGroup;
 import models.Player;
->>>>>>> models
 
 /**
  * ...
@@ -19,12 +16,9 @@ class TestState extends FlxState
 {
 
 	var s:FlxSprite;
-<<<<<<< HEAD
 	var bg:FlxSprite;
 	
-=======
 	var player:Player;
->>>>>>> models
 	override public function create():Void 
 	{
 		super.create();
@@ -49,14 +43,11 @@ class TestState extends FlxState
 		
 
 		add(s);
-<<<<<<< HEAD
 		add(bg);
-=======
 		
 	}
 
 	override public function update(elapsed:Float){
 		player.update(elapsed);	
->>>>>>> models
 	}
 }

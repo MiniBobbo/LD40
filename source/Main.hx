@@ -14,8 +14,10 @@ class Main extends Sprite
 		super();
 		super(); 
 		InputHelper.init();
+		InputHelper.addButton('action');
+		InputHelper.assignKeyToButton('SPACE', 'action');
 		InputHelper.allowArrowKeys();
 		InputHelper.allowWASD();
-		addChild(new FlxGame(480, 270, MenuState));
+		addChild(new FlxGame(480, 270, TestGridState));
 	}
 }

@@ -12,6 +12,17 @@ class Person extends GridEntity {
         _itemCarried = object;
     }
 
+	/**
+	 * Determines if this person is carrying anything.
+	 * @return	True if currently carrying another object.  Otherwise false
+	 */
+	override public function isCarrying():Bool {
+		if (_itemCarried != null)
+			return true;
+			
+		return false;
+	}
+	
     public function new () {
         super();
         canCarry = true;

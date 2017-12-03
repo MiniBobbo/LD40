@@ -1,5 +1,7 @@
 import defs.LevelDef;
+import flixel.FlxG;
 import flixel.math.FlxPoint;
+import models.Grid;
 import models.Point;
 class C{
     // speed in seconds
@@ -13,7 +15,8 @@ class C{
 
 	//Variables that match the display up to the grid model.
 	public static var TILE_SIZE = 32;
-	public static var GRID_OFFSET:Float = 0;
+	public static var GRID_OFFSET_X:Float = 32;
+	public static var GRID_OFFSET_Y:Float = 38;
 	
     public static function getNextId():Int{
         NEXT_ID ++;
@@ -21,12 +24,15 @@ class C{
     }
 	
 	/**
-	 * Converts a grid point to a FlxPoint in world space.
+	 * Converts a grid point to a FlxPoint representing the upper left corner of the
+	 * grid in world space.  Be careful of offsets if your sprite isn't the same as the 
+	 * tile size.
+	 * 
 	 * @param	p	Point to convert
 	 * @return		FlxPoint in grid space.
 	 */
 	public static function pointToPixel(p:Point):FlxPoint {
-		return FlxPoint.weak(p.x*TILE_SIZE + GRID_OFFSET, p.y*TILE_SIZE + GRID_OFFSET);
+		return FlxPoint.weak(p.x*TILE_SIZE + GRID_OFFSET_X, p.y*TILE_SIZE + GRID_OFFSET_Y);
 	}
 	
 	
@@ -43,7 +49,7 @@ class C{
 					managerCount:1,
 					requestMin:10,
 					requestVar:5,
-					playerStart:new Point(5,5)
+					playerStart:new Point(0,0)
 				};				
 			default:
 				ld = {
@@ -54,7 +60,7 @@ class C{
 					managerCount:1,
 					requestMin:10,
 					requestVar:5,
-					playerStart:new Point(5,5)
+					playerStart:new Point(0,0)
 				};
 		}
 		return ld;
@@ -63,6 +69,13 @@ class C{
 
 	public static function test(): { x:Float, y:Float } {
 		return {x:1.0,y:2.0};
+	}
+	
+	public static function makeGridDefaultLocationsImpassable(grid:Grid) {
+
+		grid.makeImpassable(new Point(12,5));
+		grid.makeImpassable(new Point(11,4));
+		grid.makeImpassable(new Point(12,4));
 	}
 	
 }

@@ -9,7 +9,9 @@ class GridEntity {
     public var canCarry:Bool = false;
     public var actionable:Bool = false;
     
-        public function new(){
+    public var type:TypeOfObject = TypeOfObject.None;
+	
+    public function new(){
         Id = C.getNextId();
         locationOnGrid = new Point();
         facing = Facing.None;
@@ -28,6 +30,15 @@ class GridEntity {
     public function moved(){
 
     }
+	
+	/**
+	* Determines if this person is carrying anything.
+	* @return	True if currently carrying another object.  Otherwise false
+	*/
+	public function isCarrying():Bool {
+		return false;
+	}
+
 
 }
 
@@ -45,6 +56,8 @@ enum TypeOfObject {
     Copies;
     Report;
     Box;
+	Box_Button;
+	Manager;
 }
 
 

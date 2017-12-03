@@ -23,9 +23,16 @@ class Grid {
        entityMap.set(gridEntity.Id, gridEntity);
     }
 
+	/**
+	 * Gets the entity at a particular point from the grid.
+	 * @param	point	
+	 * @return		The entity at that point.  If there is no entity, returns null.
+	 */
     public function getEntityAtPoint(point:Point):GridEntity{
         var idAtPoint = gridCells[point.x][point.y];
-            return entityMap.get(idAtPoint);
+        if (!entityMap.exists(idAtPoint))
+			return null;
+		return entityMap.get(idAtPoint);
     }
 
     public function isValid(point:Point):Bool{
@@ -57,6 +64,45 @@ class Grid {
             removeEntity(gridEntity);
             placeEntity(potentialDestination, gridEntity);
             gridEntity.moved();
+			gridEntity.facing = direction;
         }
     }
+	
+	/**
+	 * Makes a particular location on the grid impassable.
+	 * Really, just sets the ID of the grid section to 1.
+	 * @param	point	The point to make impassable in grid units.
+	 * @return 			True if successful.  
+	 */
+	public function makeImpassable(point:Point):Bool {
+		if (!isValid(point))
+			return false;
+		gridCells[point.x][point.y] = 1;
+		return true;
+	}
+	
+	
+	public function areEntitiesFacing(e1:GridEntity, e2:GridEntity):Bool {
+		var checkPoint = UtilityHelper.shiftPointInDirection(e1.facing, e1.locationOnGrid);
+		var checkEnt = getEntityAtPoint(checkPoint);
+		if (checkEnt != null && checkEnt == e2) {
+			checkPoint = UtilityHelper.shiftPointInDirection(e2.facing, e2.locationOnGrid);
+			checkEnt = getEntityAtPoint(checkPoint);
+				if (checkEnt != null && checkEnt == e1) {
+					return true;
+				}
+		}
+		return false;
+	}
+
+	
+	/**
+	 * Finds the entity that a particular entity is facing, if any.
+	 * @param	entityToCheck	
+	 * @return		Entity that the checked entity is facing.  Returns null if not facing anything.
+	 */
+	public function getObjectEntityIsFacing(entityToCheck:GridEntity):GridEntity {
+		var checkPoint = UtilityHelper.shiftPointInDirection(entityToCheck.facing, entityToCheck.locationOnGrid);
+		return getEntityAtPoint(checkPoint);
+	}
 }
