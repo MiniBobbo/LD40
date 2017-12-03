@@ -46,35 +46,11 @@ class Grid {
 
     public function moveEntity(direction:Facing, gridEntity:GridEntity){
         var current = gridEntity.locationOnGrid;
-        var potentialDestination = shiftPointInDirection(direction, current);
+        var potentialDestination = UtilityHelper.shiftPointInDirection(direction, current);
         if(isOpen(potentialDestination)){
             removeEntity(gridEntity);
             placeEntity(potentialDestination, gridEntity);
             gridEntity.moved();
         }
-    }
-
-    /**
-     *  return new point based on change from moving in a direction
-     *  
-     *  @param   direction 
-     *  @param   currentPoint 
-     *  @return  Point
-     */
-    public function shiftPointInDirection(direction:Facing, currentPoint:Point):Point{
-        var point = currentPoint.copy();
-        switch(direction){
-            case Facing.Up:
-                point.y--;
-            case Facing.Right:
-                point.x++;
-            case Facing.Down:
-                point.y++;
-            case Facing.Left:
-                point.x--;   
-            default:
-        }
-        return point;
-            
     }
 }
