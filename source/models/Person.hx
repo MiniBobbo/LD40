@@ -1,4 +1,5 @@
 package models;
+import models.GridEntity.TypeOfObject;
 
 class Person extends GridEntity {
 
