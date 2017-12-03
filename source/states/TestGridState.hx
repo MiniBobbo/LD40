@@ -2,7 +2,10 @@ package states;
 
 import models.BoxButton;
 import models.CoffeeObject;
+import models.CoffeePotObject;
+import models.CoffeeTableObject;
 import models.GridEntity;
+import models.Manager;
 import models.Point;
 import flixel.FlxState;
 import flixel.FlxG;
@@ -24,22 +27,33 @@ class TestGridState extends FlxState
 	var gridText:Array<Array<FlxText>>;
 	var displayText:FlxText;
 	var player:Player;
-	var manager:Person;
+	var manager:Manager;
 	var boxButton:BoxButton;
 	var object:GridEntity;
-	var coffee:CoffeeObject;
+	//var coffee:CoffeeObject;
+	var coffeeTable:CoffeeTableObject;
+	var coffeePot:CoffeePotObject;
+	
 	var IH = InputHelper;
+	
+	var TEST_GRID_SIZE = 38;
 	
 	override public function create():Void 
 	{
 		super.create();
 		grid = new Grid();
 		player = new Player();
-		coffee = new CoffeeObject();
 		
-		player.tryReceive(coffee);
-		manager = new Person();
+		EntityHelper.initLevel(this, grid);
+		
+		//coffee = new CoffeeObject();
+		//player.tryReceive(coffee);
+		
+		manager = new Manager();
 		boxButton = new BoxButton();
+		
+		coffeePot = new CoffeePotObject();
+		coffeeTable = new CoffeeTableObject();
 		
 		manager.itemTypeAwating = TypeOfObject.Coffee;
 		
@@ -48,13 +62,13 @@ class TestGridState extends FlxState
 		for (x in 0...C.GRID_WIDTH) {
 			gridText.push(new Array<FlxText>());
 			for (y in 0...C.GRID_HEIGHT) {
-				var t = new FlxText(x*32, y*32, 32, 'test');
+				var t = new FlxText(x*TEST_GRID_SIZE, y*TEST_GRID_SIZE, TEST_GRID_SIZE, 'test', 5);
 				gridText[x].push(t);
 				add(t);
 			}
 		}
 
-		displayText = new FlxText(0, C.GRID_HEIGHT * C.TILE_SIZE, FlxG.width, 'Player: ' + player.get_itemCarried().type.getName());
+		displayText = new FlxText(0, C.GRID_HEIGHT * TEST_GRID_SIZE, FlxG.width, '');
 		add(displayText);
 		
 		
@@ -63,12 +77,20 @@ class TestGridState extends FlxState
 		grid.placeEntity(new Point(0,0), boxButton);
 		grid.addGridEntity(player);
 		grid.addGridEntity(manager);
+		grid.addGridEntity(coffeeTable);
+		grid.addGridEntity(coffeePot);
 		grid.placeEntity(new Point(5, 1), manager);
+		grid.placeEntity(new Point(7, 0), coffeePot);
+		grid.placeEntity(new Point(8, 0), coffeeTable);
+		
+		coffeePot.facing = Facing.Right;
+		
 		manager.facing = Facing.Left;
-		manager.type = TypeOfObject.Manager;
+		manager.type = TypeOfObject.MANAGER;
+		manager.itemTypeAwating = TypeOfObject.Coffee;
 		grid.placeEntity(new Point(5, 5), player);
 		//grid.placeEntity(new Point(13, 1), player);
-		grid.moveEntity(Facing.Up, player);
+		//grid.moveEntity(Facing.Up, player);
 		C.makeGridDefaultLocationsImpassable(grid);
 		
 	}
@@ -79,7 +101,14 @@ class TestGridState extends FlxState
 		super.update(elapsed);
 		for (x in 0...C.GRID_WIDTH) {
 			for (y in 0...C.GRID_HEIGHT) {
-				gridText[x][y].text = grid.gridCells[x][y] + '';
+				var e = grid.entityMap.get(grid.gridCells[x][y]);
+				if (e != null) {
+					gridText[x][y].text = e.type.getName();
+					if (e.isCarrying())
+						gridText[x][y].text += '\nCarrying:\n' + cast (e, Person).get_itemCarried().type.getName();
+				} else {
+					gridText[x][y].text = grid.gridCells[x][y] + '';
+				}
 			}
 		}
 
@@ -89,8 +118,8 @@ class TestGridState extends FlxState
 			getPlayerInput();
 		}
 		
-		displayText.text = 'Player: ' + player.get_itemCarried();
-		displayText.text += '\nManager; ' + manager.get_itemCarried();
+		//displayText.text = 'Player: ' + player.get_itemCarried();
+		//displayText.text += '\nManager; ' + manager.get_itemCarried();
 		
 	}
 	
@@ -111,7 +140,7 @@ class TestGridState extends FlxState
 			player.facing = Facing.Left;
 			grid.moveEntity(Facing.Left, player);
 		}
-		else if(IH.isButtonPressed("action")){
+		else if(IH.isButtonJustPressed("action")){
 			//var adjacentEntity,
 				//adjacentPoint;
 			//adjacentPoint = UtilityHelper.shiftPointInDirection(player.facing, player.locationOnGrid);
@@ -123,12 +152,16 @@ class TestGridState extends FlxState
 	}
 	
 	private function interactWithObject(object:GridEntity){
-		if (Std.is(object, Person)){
-			FlxG.log.add('Interacting with a person');
-			var p:Person = cast object;
-			player.tryGive(p, player.get_itemCarried());
-			
-		}
+		displayText.text = 'Interacting with ' + object.type.getName();
+			object.interact(player);
+		//if (Std.is(object, Person)){
+			//FlxG.log.add('Interacting with a person');
+			//var p:Person = cast object;
+			//player.tryGive(p);
+		//} else {
+			//object.interact(player);
+			//
+		//}
 			
 		
 	}

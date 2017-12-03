@@ -1,4 +1,5 @@
 package models;
+import flixel.FlxG;
 import models.GridEntity.TypeOfObject;
 
 class Person extends GridEntity {
@@ -34,12 +35,36 @@ class Person extends GridEntity {
             receive(object); 
             return true;
         }
-        else return false;
+		FlxG.log.add(type.getName() + ' does not want the ' + object.type.getName());
+        return false;
     }
 
-    public function tryGive(recipient:Person, object:MoveableObject){
-            var giveSuccess = recipient.tryReceive(object); 
-            if(giveSuccess) dropCarriedObject();
+	/**
+	 * This person tries to give an object to another entity.  If this is successful the other entity
+	 * will have the object after this function completes.  This can be either the object
+	 * held or another object that this knows about.  
+	 * @param	recipient	Who should try to get this object?
+	 * @param	object		Which object should be given?  If null, try the held obbject.
+	 * @return		True if successful, otherwise false.
+	 */
+    public function tryGive(recipient:Person, ?object:MoveableObject):Bool{
+		//FlxG.log.add(type.getName() + ' is trying to give to ' + recipient.type.getName());
+		var giveSuccess;
+		if (object != null) {
+			giveSuccess = recipient.tryReceive(object); 
+		}
+		else if (object == null && _itemCarried != null) {
+			//FlxG.log.add('No object was supplied, so trying to give the item carried');
+			giveSuccess = recipient.tryReceive(_itemCarried);
+		}
+		else{
+			FlxG.log.add(type.getName() + ' failed to give to ' + recipient.type.getName());
+			giveSuccess = false;
+		}
+			
+        if (giveSuccess && object == null) dropCarriedObject();
+		
+		return giveSuccess;
     }
 
     private function receive(object:MoveableObject){

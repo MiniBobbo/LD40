@@ -1,5 +1,6 @@
 package models;
 import C;
+import models.GridEntity.TypeOfObject;
 
 class Player extends Person {
     
@@ -10,6 +11,7 @@ class Player extends Person {
     public function new(){
         super();
         speed = C.SPEED;
+		type = TypeOfObject.PLAYER;
     }
 
     // player always receives an item if they have hands free
@@ -21,7 +23,7 @@ class Player extends Person {
         else return false;
     }
 
-    public function interact(gridEntity:GridEntity){
+    override public function interact(gridEntity:GridEntity){
         if(!gridEntity.actionable) return;
         //TODO: handle the interaction between entity and player
         

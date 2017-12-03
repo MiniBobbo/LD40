@@ -63,11 +63,13 @@ enum TypeOfObject {
     None;
     Coffee;
 	Coffee_Pot;
+	Coffee_Table;
     Copies;
     Report;
     Box;
 	Box_Button;
-	Manager;
+	MANAGER;
+	PLAYER;
 }
 
 
