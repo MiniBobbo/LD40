@@ -18,6 +18,9 @@ class C{
 	public static var GRID_OFFSET_X:Float = 32;
 	public static var GRID_OFFSET_Y:Float = 38;
 	
+	//variables related to grid entities
+	public static var MANAGER_STARTING_HAPPINESS = 100;
+
     public static function getNextId():Int{
         NEXT_ID ++;
         return NEXT_ID - 1;
@@ -64,18 +67,17 @@ class C{
 				};
 		}
 		return ld;
+	}
+	    public static function makeGridDefaultLocationsImpassable(grid:Grid) {
 
+        grid.makeImpassable(new Point(12,5));
+        grid.makeImpassable(new Point(11,4));
+        grid.makeImpassable(new Point(12,4));
 	}
 
 	public static function test(): { x:Float, y:Float } {
 		return {x:1.0,y:2.0};
 	}
-	
-	public static function makeGridDefaultLocationsImpassable(grid:Grid) {
 
-		grid.makeImpassable(new Point(12,5));
-		grid.makeImpassable(new Point(11,4));
-		grid.makeImpassable(new Point(12,4));
-	}
 	
 }
