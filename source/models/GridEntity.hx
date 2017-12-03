@@ -7,6 +7,7 @@ class GridEntity {
     public var facing:Facing;
     public var canBeCarried:Bool = false;
     public var canCarry:Bool = false;
+    public var actionable:Bool = false;
     
         public function new(){
         Id = C.getNextId();
@@ -44,5 +45,6 @@ enum TypeOfObject {
     Copies;
     Report;
     Box;
-
 }
+
+

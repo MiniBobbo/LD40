@@ -10,6 +10,7 @@ import models.Player;
 import models.Person;
 import models.MoveableObject;
 import inputhelper.InputHelper;
+import UtilityHelper;
 
 /**
  * ...
@@ -66,11 +67,13 @@ class TestGridState extends FlxState
 
 		player.update(elapsed);
 
-		if(player.actionDelay <= 0 ) getPlayerInput();
+		if(player.actionDelay <= 0 ) {
+			getPlayerInput();
+		}
 		
 	}
 	
-	private function getPlayerInput(){
+	private function getPlayerInput() {
 		if(IH.isButtonPressed("up")){
 			grid.moveEntity(Facing.Up, player);
 		}
@@ -83,6 +86,13 @@ class TestGridState extends FlxState
 		else if(IH.isButtonPressed("left")){
 			grid.moveEntity(Facing.Left, player);
 		}
+		else if(IH.isButtonPressed("space")){
+			var adjacentEntity,
+				adjacentPoint;
+			adjacentPoint = UtilityHelper.shiftPointInDirection(player.facing, player.locationOnGrid);
+			adjacentEntity = grid.getEntityAtPoint(adjacentPoint);
+			
+		}
 	}
-	
+
 }

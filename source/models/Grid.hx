@@ -1,6 +1,7 @@
 package models;
 import haxe.ds.IntMap;
 import models.GridEntity.Facing;
+import UtilityHelper;
 
 class Grid {
     
@@ -20,6 +21,11 @@ class Grid {
 
     public function addGridEntity(gridEntity:GridEntity){
        entityMap.set(gridEntity.Id, gridEntity);
+    }
+
+    public function getEntityAtPoint(point:Point):GridEntity{
+        var idAtPoint = gridCells[point.x][point.y];
+            return entityMap.get(idAtPoint);
     }
 
     public function isValid(point:Point):Bool{

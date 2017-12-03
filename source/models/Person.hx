@@ -4,7 +4,6 @@ import models.GridEntity.TypeOfObject;
 class Person extends GridEntity {
 
     public var itemTypeAwating:TypeOfObject = TypeOfObject.None;
-
     private var _itemCarried:MoveableObject;
     public function get_itemCarried(){
         return _itemCarried;
@@ -21,7 +20,7 @@ class Person extends GridEntity {
 
     public dynamic function tryReceive(object:MoveableObject):Bool {
         if(_itemCarried == null && object.type == itemTypeAwating) {
-            receive(object);
+            receive(object); 
             return true;
         }
         else return false;
