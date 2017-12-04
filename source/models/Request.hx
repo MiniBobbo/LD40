@@ -1,4 +1,5 @@
 package models;
+import models.GridEntity.TypeOfObject;
 
 class Request{
 
@@ -14,9 +15,9 @@ class Request{
     private function getItemTypeToFullfillRequest(requestType:RequestType):TypeOfObject{
         switch (requestType){
             case RequestType.Coffee:
-            TypeOfObject.Coffee;
+				return TypeOfObject.Coffee;
             case RequestType.Copies:
-            TypeOfObect.Copies;
+				return TypeOfObject.COPIES;
             default:
         }
             
