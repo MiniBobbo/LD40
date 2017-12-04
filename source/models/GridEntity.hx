@@ -73,6 +73,7 @@ enum TypeOfObject {
 	Box_Button;
 	MANAGER;
 	PLAYER;
+    DOCTOCOPY;
 }
 
 

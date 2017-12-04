@@ -2,6 +2,7 @@ import models.Grid;
 import models.GridEntity;
 import models.MoveableObject;
 import models.Point;
+import models.Request;
 import states.PlayState;
 import views.EntitySprite;
 
@@ -50,6 +51,18 @@ class UtilityHelper{
 	 */
 	public static function createVisualObject(ent:GridEntity):EntitySprite {
 		
+
+	}
+
+	public function getRandomRequestType():RequestType{
+		//TODO: make this actually maintainable unlike this loser version
+		var reqType:RequestType;
+		switch (Std.random(2)){
+			case 0: reqType = RequestType.Coffee;
+			case 1: reqType = RequestType.Copies;
+			default:
+		}
+		return reqType;
 	}
 	
 	
