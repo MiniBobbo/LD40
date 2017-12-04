@@ -14,7 +14,7 @@ class MenuState extends FlxState
 	override public function create():Void 
 	{
 		super.create();
-		level = new PlayState(C.getLevelDef(1));
+		var level = new TestGraphicsState(C.getLevelDef(1));
 		
 		
 		FlxG.switchState(level);

@@ -5,7 +5,7 @@ import models.Grid;
 import models.Point;
 class C{
     // speed in seconds
-    public static var SPEED:Float = .5;
+    public static var SPEED:Float = .25;
 
     public static var NEXT_ID:Int = 100;
 

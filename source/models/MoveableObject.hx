@@ -9,4 +9,9 @@ class MoveableObject extends GridEntity {
         canBeCarried = true;
         canCarry = false;
     }
+	
+	public function setCarriedBy(person:Person) {
+		carriedBy = person;
+	}
+
 }

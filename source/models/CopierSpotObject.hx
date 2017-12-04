@@ -1,5 +1,4 @@
 package models;
-import flixel.FlxG;
 import models.GridEntity;
 import models.GridEntity.TypeOfObject;
 
@@ -7,14 +6,14 @@ import models.GridEntity.TypeOfObject;
  * ...
  * @author Dave
  */
-class CoffeeTableObject extends Person 
+class CopierSpotObject extends Person 
 {
 
 	public function new() 
 	{
 		super();
-		type = TypeOfObject.Coffee_Table;
-		itemTypeAwating = TypeOfObject.Coffee;
+		type = TypeOfObject.COPIER_SPOT;
+		itemTypeAwating = TypeOfObject.COPIES;
 	}
 	
 	override public function interact(sender:GridEntity) 

@@ -16,6 +16,7 @@ class ManagerSprite extends EntitySprite
 		//Builds the animations for this sprite
 		buildAnimations();
 		animation.play('stand_mad');
+		carryOffset.set(0,-C.TILE_SIZE);
 		
 	}
 	

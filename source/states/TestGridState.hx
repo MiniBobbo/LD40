@@ -44,7 +44,7 @@ class TestGridState extends FlxState
 		grid = new Grid();
 		player = new Player();
 		
-		EntityHelper.initLevel(this, grid);
+		EntityHelper.initLevel(this, grid, null);
 		
 		//coffee = new CoffeeObject();
 		//player.tryReceive(coffee);
@@ -54,6 +54,7 @@ class TestGridState extends FlxState
 		
 		coffeePot = new CoffeePotObject();
 		coffeeTable = new CoffeeTableObject();
+		
 		
 		manager.itemTypeAwating = TypeOfObject.Coffee;
 		
@@ -105,7 +106,7 @@ class TestGridState extends FlxState
 				if (e != null) {
 					gridText[x][y].text = e.type.getName();
 					if (e.isCarrying())
-						gridText[x][y].text += '\nCarrying:\n' + cast (e, Person).get_itemCarried().type.getName();
+						gridText[x][y].text += '\nCarrying:\n' + cast (e, Person)._itemCarried.type.getName();
 				} else {
 					gridText[x][y].text = grid.gridCells[x][y] + '';
 				}

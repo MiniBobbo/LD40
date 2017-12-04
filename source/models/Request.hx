@@ -22,6 +22,7 @@ class Request{
         var typeOfObject:TypeOfObject;
         switch (requestType){
             case RequestType.Coffee:
+
             typeOfObject = TypeOfObject.Coffee;
             case RequestType.Copies:
             typeOfObject = TypeOfObject.Copies;
