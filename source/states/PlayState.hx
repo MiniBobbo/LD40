@@ -10,7 +10,6 @@ import inputhelper.InputHelperMenuState;
 import models.Grid;
 import models.GridEntity.Facing;
 import models.Player;
-import models.Manager;
 import views.PlayerSprite;
 
 class PlayState extends FlxState
@@ -21,7 +20,6 @@ class PlayState extends FlxState
 	//Model objects
 	var playerEntity:Player;
 	var grid:Grid;
-	var managers:Array<Manager>;
 
 	//View objects
 	var bg:FlxSprite;
@@ -35,7 +33,7 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-		createModels(ld);
+		createObjects();
 		
 		add(bg);
 		add(player);
@@ -75,26 +73,13 @@ class PlayState extends FlxState
 		}
 	}
 	
-	function createModels(ld):Void 
+	function createObjects():Void 
 	{
-
-		/*
-		levelID:1,
-		levelName:'Getting Started',
-		quota:5,
-		happinessRequirement:50,
-		managerCount:1,
-		requestMin:10,
-		requestVar:5,
-		playerStart:new Point(0,0)
-		*/
 		//Create movel objects
 		grid = new Grid();
 		var atlasFrames  = FlxAtlasFrames.fromTexturePackerJson('assets/data/atlas.png', 'assets/data/atlas.json');
 		C.makeGridDefaultLocationsImpassable(grid);
 		
-		//create managers
-		managers = initManagers(ld.managerCount);
 		//create view objects
 		bg = new FlxSprite();
 		bg.frames = atlasFrames;
@@ -113,28 +98,4 @@ class PlayState extends FlxState
 		FlxG.watch.add(ld, 'playerStart');
 
 	}
-
-	public function initManagers(numOfManagers):Array<Manager>{
-		var managers = new Array<Manager>();
-		for(i in 0...numOfManagers){
-			managers.push(initNextManager(i));
-		}
-		//enter the initialized managers into an array
-		return managers;
-	}
-
-	/**
-	 *  used privately to return as many managers as the level needs
-	 *  according to their static order
-	 *  
-	 *  @param   intMatchingEnum 
-	 *  @return  Manager
-	 */
-	private function initNextManager(intMatchingEnum):Manager{
-		var manager = new Manager(ManagerType.createByIndex(intMatchingEnum));
-		//initialize the manager at id
-		return manager;
-	}
-
-
 }

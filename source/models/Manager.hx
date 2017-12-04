@@ -1,7 +1,6 @@
 package models;
 import flixel.FlxG;
 import models.GridEntity;
-import C;
 
 /**
  * ...
@@ -10,11 +9,7 @@ import C;
 class Manager extends Person 
 {
 	public var managerType:ManagerType;
-	public var name:String;
-	public var title:String;
-	public var happiness:Int = C.MANAGER_STARTING_HAPPINESS;
-	public var currentRequest:Request;
-	public var requestCountdown:Int;
+	
 	
 	public function new(managerType:ManagerType) 
 	{
