@@ -80,6 +80,7 @@ enum TypeOfObject {
 	ANY;
 	COPIER;
 	COPIER_SPOT;
+
 }
 
 

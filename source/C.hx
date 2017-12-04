@@ -20,6 +20,7 @@ class C{
 	
 	//variables related to grid entities
 	public static var MANAGER_STARTING_HAPPINESS = 100;
+	public static var HAPPINESS_INCREASE_ON_COMPLETE = 20;
 
     public static function getNextId():Int{
         NEXT_ID ++;
