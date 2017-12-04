@@ -6,22 +6,22 @@ class Player extends Person {
     
     //public var Sprite
     private var speed:Float;
-    public var actionDelay:Float = 0;
 
     public function new(){
         super();
         speed = C.SPEED;
 		type = TypeOfObject.PLAYER;
+		itemTypeAwating = TypeOfObject.ANY;
     }
 
     // player always receives an item if they have hands free
-    public override function tryReceive(object:MoveableObject):Bool {
-        if(get_itemCarried() == null) {
-            receive(object);
-            return true;
-        }
-        else return false;
-    }
+    //public override function tryReceive(object:MoveableObject):Bool {
+        //if(!isCarrying()) {
+            //receive(object);
+            //return true;
+        //}
+        //else return false;
+    //}
 
     override public function interact(gridEntity:GridEntity){
         if(!gridEntity.actionable) return;

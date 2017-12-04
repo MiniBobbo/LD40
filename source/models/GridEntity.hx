@@ -8,6 +8,10 @@ class GridEntity {
     public var canBeCarried:Bool = false;
     public var canCarry:Bool = false;
     public var actionable:Bool = false;
+	public var carriedBy:GridEntity;
+	
+	public var actionDelay:Float = 0;
+
     
     public var type:TypeOfObject = TypeOfObject.None;
 	
@@ -49,7 +53,7 @@ class GridEntity {
 	}
 
 	public function update(elapsed:Float) {
-		
+		actionDelay -= elapsed;
 	}
 
 }
@@ -67,12 +71,15 @@ enum TypeOfObject {
     Coffee;
 	Coffee_Pot;
 	Coffee_Table;
-    Copies;
-    Report;
+    COPIES;
+    REPORT;
     Box;
 	Box_Button;
 	MANAGER;
 	PLAYER;
+	ANY;
+	COPIER;
+	COPIER_SPOT;
 }
 
 

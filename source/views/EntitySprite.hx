@@ -1,7 +1,9 @@
 package views;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
+import flixel.math.FlxPoint;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import models.GridEntity;
 import models.MoveableObject;
@@ -16,10 +18,15 @@ class EntitySprite extends FlxSprite
 	//The grid entity that this Entity Sprite represents.
 	public var entity:GridEntity = null;
 	
+	//Holds the carry location of this entity, which is just an offset of their origin.
+	public var carryOffset:FlxPoint;
+	public var speechOffset:FlxPoint;
+	
 	//Holds the last variables to tell if something in the model changed.
-	var displayFlags:Array<Bool>;
+	var dispFlags:Array<Bool>;
 	var lastLocation:Point;
-	var lastCarry:EntitySprite;
+	var lastCarry:Bool;
+	
 	
 	
 	
@@ -31,6 +38,38 @@ class EntitySprite extends FlxSprite
 		frames = atlasFrames;
 		lastLocation = entity.locationOnGrid.copy();
 		lastCarry = null;
+		dispFlags = [];
+		
+		//Default the carry offset to the right of the cell.
+		speechOffset = new FlxPoint(C.TILE_SIZE, 0);
+		carryOffset = new FlxPoint(0, 0);
+		
+		for (i in 0...DisplayFlags.createAll().length) {
+			dispFlags.push(false);
+		}
+		
+		//FlxG.watch.add(this, 'dispFlags');
+	}
+	
+	override public function update(elapsed:Float):Void 
+	{
+		super.update(elapsed);
+		calculateDisplayFlags();
+		resetDispayVariables();
+		
+		//If the sprite is being carried, move it to the correct place.
+		if (entity.carriedBy != null) {
+			//FlxG.log.add('carried');
+			var parent = EntityHelper.getSpriteByModel(entity.carriedBy);
+			x = parent.x + parent.carryOffset.x;
+			y = parent.y + parent.carryOffset.y;
+		}
+	}
+	
+	function resetDispayVariables() 
+	{
+		lastCarry = entity.isCarrying();
+		resetLastLocation();
 	}
 	
 	/**
@@ -53,6 +92,31 @@ class EntitySprite extends FlxSprite
 		lastLocation = entity.locationOnGrid.copy();
 	}
 	
+	/**
+	 * Goes through and sets all the display flags based on the entity model state.
+	 */
+	private function calculateDisplayFlags() {
+		for (d in 0...dispFlags.length) {
+			dispFlags[d] = false;
+		}
+		
+		//Does the entity have any action delay?
+		if (entity.actionDelay > 0)
+			dispFlags[DisplayFlags.ACTION_DELAY.getIndex()] = true;
+		//Did the entity change locations?
+		if (!Point.comparePoints(entity.locationOnGrid, lastLocation))
+			dispFlags[DisplayFlags.LOCATION_CHANGED.getIndex()] = true;
+		//Did the entity carry or drop something?
+		if (entity.isCarrying() != lastCarry){
+			if (entity.isCarrying())
+				dispFlags[DisplayFlags.OBJECT_CARRIED.getIndex()] = true;
+			else
+				dispFlags[DisplayFlags.OBJECT_LOST.getIndex()] = true;
+		}
+		if (entity.carriedBy != null)
+			dispFlags[DisplayFlags.LOCATION_CHANGED.getIndex()] = true;
+			
+	}
 	
 	
 }
@@ -61,4 +125,6 @@ enum DisplayFlags {
 	LOCATION_CHANGED;
 	OBJECT_CARRIED;
 	OBJECT_LOST;
+	ACTION_DELAY;
+	IS_CARRIED;
 }

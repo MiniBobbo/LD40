@@ -5,12 +5,17 @@ import models.GridEntity.TypeOfObject;
 class Person extends GridEntity {
 
     public var itemTypeAwating:TypeOfObject = TypeOfObject.None;
-    private var _itemCarried:MoveableObject;
-    public function get_itemCarried(){
-        return _itemCarried;
-    }
+    public var _itemCarried:MoveableObject;
+    //public function get_itemCarried(){
+        //return _itemCarried;
+    //}
     private function set_itemCarried(object:MoveableObject){
+		if (object == null)
+		return;
         _itemCarried = object;
+		FlxG.log.add(this.type.getName() + ' carrying ' + object.type.getName());
+		//if(object != null)
+			object.carriedBy = this;
     }
 
 	/**
@@ -31,8 +36,9 @@ class Person extends GridEntity {
     }
 
     public dynamic function tryReceive(object:MoveableObject):Bool {
-        if(_itemCarried == null && object.type == itemTypeAwating) {
-            receive(object); 
+        if(_itemCarried == null && (object.type == itemTypeAwating || itemTypeAwating == TypeOfObject.ANY)) {
+            FlxG.log.add(type.getName() + ' wants the ' + object.type.getName());
+			receive(object); 
             return true;
         }
 		FlxG.log.add(type.getName() + ' does not want the ' + object.type.getName());
@@ -48,16 +54,16 @@ class Person extends GridEntity {
 	 * @return		True if successful, otherwise false.
 	 */
     public function tryGive(recipient:Person, ?object:MoveableObject):Bool{
-		//FlxG.log.add(type.getName() + ' is trying to give to ' + recipient.type.getName());
+		FlxG.log.add(type.getName() + ' is trying to give to ' + recipient.type.getName());
 		var giveSuccess;
 		if (object != null) {
 			giveSuccess = recipient.tryReceive(object); 
 		}
 		else if (object == null && _itemCarried != null) {
-			//FlxG.log.add('No object was supplied, so trying to give the item carried');
+			FlxG.log.add('No object was supplied, so trying to give the item carried');
 			giveSuccess = recipient.tryReceive(_itemCarried);
 		}
-		else{
+		else {
 			FlxG.log.add(type.getName() + ' failed to give to ' + recipient.type.getName());
 			giveSuccess = false;
 		}
@@ -67,13 +73,22 @@ class Person extends GridEntity {
 		return giveSuccess;
     }
 
+	public function forceReceive(object:MoveableObject){
+		dropCarriedObject();
+		receive(object);
+	}
+	
     private function receive(object:MoveableObject){
-        set_itemCarried(object);
+        _itemCarried = object;
+		object.setCarriedBy(this);
     }
 
-    private function dropCarriedObject(){
+    private function dropCarriedObject(removeCarriedBy:Bool = false){
         //TODO: allow objects to relocate to the ground
-        set_itemCarried(null);
+		if(removeCarriedBy)
+			_itemCarried.carriedBy = null;
+        _itemCarried = null;
+		
     }
 
 }

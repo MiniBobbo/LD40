@@ -4,6 +4,7 @@ import flixel.tweens.FlxTween;
 import models.GridEntity;
 import models.Player;
 import models.Point;
+import views.EntitySprite.DisplayFlags;
 
 enum PlayerDisplayState {
 	MOVING;
@@ -35,6 +36,7 @@ class PlayerSprite extends EntitySprite
 		animation.addByPrefix('mid_pickup', 'worker_mid_pickup', DEFAULT_FPS, true);
 		animation.addByPrefix('end_pickup', 'worker_end_pickup', DEFAULT_FPS, true);
 		animation.play('stand');
+		carryOffset.set(0,-C.TILE_SIZE);
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -42,7 +44,7 @@ class PlayerSprite extends EntitySprite
 		super.update(elapsed);
 		
 		
-		if (!Point.comparePoints(lastLocation, entity.locationOnGrid)) {
+		if (dispFlags[DisplayFlags.LOCATION_CHANGED.getIndex()]) {
 			var newLoc = C.pointToPixel(entity.locationOnGrid);
 			FlxTween.tween(this, {x:newLoc.x, y:newLoc.y}, C.SPEED, {onComplete: function(_) {ps = PlayerDisplayState.STANDING; }});
 			lastLocation = entity.locationOnGrid.copy();
